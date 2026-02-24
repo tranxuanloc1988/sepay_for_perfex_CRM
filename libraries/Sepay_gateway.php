@@ -20,7 +20,7 @@ class Sepay_gateway extends App_gateway
         /**
          * Gateway name
          */
-        $this->setName('Sepay');
+        $this->setName('SePay - Chuyển khoản QR vào TK công ty');
 
         /**
          * Add gateway settings
@@ -95,6 +95,9 @@ class Sepay_gateway extends App_gateway
             $url = 'https://pay.sepay.vn/v1/checkout/init';
         }
 
+        // Theo SePay Doc: IPN URL được cấu hình trên dashboard, KHÔNG gửi trong form
+        // Chỉ gửi: merchant, currency, order_amount, operation, order_description,
+        // order_invoice_number, customer_id, success_url, error_url, cancel_url
         $post_data = [
             'merchant' => trim($merchant_id),
             'currency' => $data['invoice']->currency_name,
@@ -118,6 +121,9 @@ class Sepay_gateway extends App_gateway
     public function create_signature($post_data, $secret_key)
     {
         $signed = [];
+        // Theo SePay Doc: ipn_url KHÔNG được ký trong signature
+        // Chỉ ký các fields: merchant, operation, payment_method, order_amount, currency,
+        // order_invoice_number, order_description, customer_id, success_url, error_url, cancel_url
         $signedFields = array_values(array_filter(array_keys($post_data), fn($field) => in_array($field, [
             'merchant',
             'operation',

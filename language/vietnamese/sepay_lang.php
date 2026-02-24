@@ -1,7 +1,7 @@
 <?php
 
 # Version 1.0.0
-$lang['sepay'] = 'SePay';
+$lang['sepay'] = 'SePay - Chuyển khoản QR vào TK công ty';
 $lang['sepay_api_key'] = 'SePay Merchant ID';
 $lang['sepay_secret_key'] = 'SePay Secret Key';
 $lang['sepay_account_number'] = 'Số tài khoản';
